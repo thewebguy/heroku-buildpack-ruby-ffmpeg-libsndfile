@@ -5,7 +5,12 @@ $stdout.sync = true
 
 $:.unshift File.expand_path("../../lib", __FILE__)
 require "language_pack"
+require "custom"
 
+# Install custom dependencies
+Custom.install_all
+
+# Continue build
 LanguagePack::Instrument.trace 'compile', 'app.compile' do
   if pack = LanguagePack.detect(ARGV[0], ARGV[1])
     pack.log("compile") do
