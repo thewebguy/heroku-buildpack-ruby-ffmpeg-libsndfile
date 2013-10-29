@@ -4,7 +4,7 @@ require "custom/installer"
 
 module Custom
   def self.install_all
-    ['ffmpeg', 'libsndfile'].each do |library|
+    ['ffmpeg', 'libsndfile1'].each do |library|
       installer = Custom::Installer.new(library)
       installer.go
     end
