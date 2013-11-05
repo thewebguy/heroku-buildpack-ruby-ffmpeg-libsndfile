@@ -15,6 +15,7 @@ module Custom
       unless installed?
         download
         install
+        makeinstall if @package_name == 'libsndfile'
         clean_up
         link
       end
@@ -32,6 +33,12 @@ module Custom
     def install
       system "tar zxpf #{@vendor_dir}/#{@package_file_name} -C #{@vendor_dir}"
       comment "Installed #{@package_name}"
+    end
+
+    def makeinstall
+      comment "Make install"
+      system "cd #{@vendor_dir}/#{@package_file_name}; ./configure; make; make install;"
+      
     end
 
     def clean_up
