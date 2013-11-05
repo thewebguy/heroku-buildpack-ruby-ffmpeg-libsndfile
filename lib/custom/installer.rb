@@ -51,6 +51,7 @@ module Custom
       File.open("#{@build_dir}/.profile.d/ruby.sh", "a") do |file|
         file.puts string
       end
+      comment File.read("#{@build_dir}/.profile.d/ruby.sh")
     end
 
     def set_env_override(key, val)
