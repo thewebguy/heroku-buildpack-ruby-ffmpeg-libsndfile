@@ -37,13 +37,11 @@ module Custom
 
     def makeinstall
       comment "Make install"
-      output = system "cd #{@vendor_dir}/#{@package_file_name};"
+      output = system "cd #{@vendor_dir}/#{@package_file_name} && ./configure"
       comment output
-      output = system "cd #{@vendor_dir}/#{@package_file_name}; ./configure"
+      output = system "make"
       comment output
-      output = system "cd #{@vendor_dir}/#{@package_file_name}; make"
-      comment output
-      output = system "cd #{@vendor_dir}/#{@package_file_name}; make install"
+      output = system "make install"
       comment output
     end
 
