@@ -37,8 +37,14 @@ module Custom
 
     def makeinstall
       comment "Make install"
-      system "cd #{@vendor_dir}/#{@package_file_name}; ./configure; make; make install;"
-      
+      output = system "cd #{@vendor_dir}/#{@package_file_name};"
+      comment output
+      output = system "cd #{@vendor_dir}/#{@package_file_name}; ./configure"
+      comment output
+      output = system "cd #{@vendor_dir}/#{@package_file_name}; make"
+      comment output
+      output = system "cd #{@vendor_dir}/#{@package_file_name}; make install"
+      comment output
     end
 
     def clean_up
@@ -58,7 +64,7 @@ module Custom
       File.open("#{@build_dir}/.profile.d/ruby.sh", "a") do |file|
         file.puts string
       end
-      comment File.read("#{@build_dir}/.profile.d/ruby.sh")
+      # comment File.read("#{@build_dir}/.profile.d/ruby.sh")
     end
 
     def set_env_override(key, val)
