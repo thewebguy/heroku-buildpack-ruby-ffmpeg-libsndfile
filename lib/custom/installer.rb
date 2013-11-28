@@ -15,7 +15,7 @@ module Custom
       unless installed?
         download
         install
-        makeinstall if @package_name == 'libsndfile'
+        makeinstall if @package_name == 'libsndfile-1.0.25'
         clean_up
         link
       end
