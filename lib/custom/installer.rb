@@ -17,7 +17,7 @@ module Custom
         install
         makeinstall if @package_name == 'libsndfile-1.0.25'
         clean_up
-        link
+        link unless @package_name == 'libsndfile-1.0.25'
       end
     end
 
@@ -36,13 +36,22 @@ module Custom
     end
 
     def makeinstall
-      comment "Make install"
-      output = system "cd #{@vendor_dir}/#{@package_file_name} && ./configure"
+      # comment "Make install"
+      # output = system "cd #{@vendor_dir}/#{@package_file_name} && ./configure"
+      # comment output
+      # output = system "make"
+      # comment output
+      # output = system "make install"
+      # comment output
+
+      comment "Apt get"
+      output = system "whoami"
       comment output
-      output = system "make"
+      output = system "apt-get update"
       comment output
-      output = system "make install"
+      output = system "apt-get install libsndfile1"
       comment output
+      
     end
 
     def clean_up
