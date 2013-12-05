@@ -33,6 +33,12 @@ module Custom
     def install
       system "tar zxpf #{@vendor_dir}/#{@package_file_name} -C #{@vendor_dir}"
       comment "Installed #{@package_name}"
+      if @package_name == 'libsndfile'
+        system "cd"
+        system "mv #{@vendor_dir}/#{@package_file_name}/include/* usr/local/include/"
+        output = system "cd usr/local/include/; ls -al"
+        comment output
+      end
     end
 
     def makeinstall
