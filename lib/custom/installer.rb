@@ -15,9 +15,10 @@ module Custom
       unless installed?
         download
         install
-        makeinstall if @package_name == 'libsndfile-1.0.25'
+        makeinstall
         clean_up
-        link unless @package_name == 'libsndfile-1.0.25'
+        link
+        comment File.read("#{@build_dir}/.profile.d/ruby.sh")
       end
     end
 
@@ -36,22 +37,13 @@ module Custom
     end
 
     def makeinstall
-      # comment "Make install"
-      # output = system "cd #{@vendor_dir}/#{@package_file_name} && ./configure"
-      # comment output
-      # output = system "make"
-      # comment output
-      # output = system "make install"
-      # comment output
-
-      comment "Apt get"
-      output = system "whoami"
+      comment "Make install"
+      output = system "cd #{@vendor_dir}/#{@package_file_name} && ./configure"
       comment output
-      output = system "apt-get update"
+      output = system "make"
       comment output
-      output = system "apt-get install libsndfile1"
+      output = system "make install"
       comment output
-      
     end
 
     def clean_up
@@ -71,7 +63,6 @@ module Custom
       File.open("#{@build_dir}/.profile.d/ruby.sh", "a") do |file|
         file.puts string
       end
-      # comment File.read("#{@build_dir}/.profile.d/ruby.sh")
     end
 
     def set_env_override(key, val)
