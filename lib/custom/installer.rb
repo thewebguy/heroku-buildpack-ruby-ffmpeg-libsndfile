@@ -15,7 +15,6 @@ module Custom
       unless installed?
         download
         install
-        makeinstall
         clean_up
         link
         comment File.read("#{@build_dir}/.profile.d/ruby.sh")
