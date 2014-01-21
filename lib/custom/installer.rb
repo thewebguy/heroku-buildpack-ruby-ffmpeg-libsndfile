@@ -15,8 +15,8 @@ module Custom
       unless installed?
         download
         install
-        clean_up
         link
+        clean_up
         comment File.read("#{@build_dir}/.profile.d/ruby.sh")
       end
     end
@@ -32,33 +32,17 @@ module Custom
 
     def install
       system "tar zxpf #{@vendor_dir}/#{@package_file_name} -C #{@vendor_dir}"
-      comment "Installed #{@package_name}"
-      if @package_name == 'libsndfile'
-        system "cd"
-        system "mv #{@vendor_dir}/#{@package_file_name}/include/* usr/local/include/"
-        output = system "cd usr/local/include/; ls -al"
-        comment output
-      end
-    end
-
-    def makeinstall
-      comment "Make install"
-      output = system "cd #{@vendor_dir}/#{@package_file_name} && ./configure"
-      comment output
-      output = system "make"
-      comment output
-      output = system "make install"
-      comment output
-    end
-
-    def clean_up
-      system "rm #{@vendor_dir}/#{@package_file_name}"
+      comment "Unzipped #{@package_name}"
     end
 
     def link
       comment "Linking #{@package_name} with application"
       set_env_override "PATH", "$HOME/vendor/#{@package_name}/bin:$PATH"
       set_env_override "LD_LIBRARY_PATH", "$HOME/vendor/#{@package_name}/lib:$LD_LIBRARY_PATH"
+    end
+
+    def clean_up
+      system "rm #{@vendor_dir}/#{@package_file_name}"
     end
 
   private
