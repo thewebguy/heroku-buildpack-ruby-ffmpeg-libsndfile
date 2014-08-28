@@ -633,7 +633,7 @@ params = CGI.parse(uri.query || "")
 
 <%= ENV["RAILS_ENV"] || ENV["RACK_ENV"] %>:
   <%= attribute "adapter",  adapter %>
-  <%= attribute "encoding", ENV['DB_ENCODING'] || 'utf8' %>
+  <%= attribute "encoding", 'utf8' %>
   <%= attribute "database", database %>
   <%= attribute "username", username %>
   <%= attribute "password", password, true %>
