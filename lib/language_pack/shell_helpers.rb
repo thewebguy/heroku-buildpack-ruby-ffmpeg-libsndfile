@@ -1,5 +1,42 @@
+require "shellwords"
+
+class NoShellEscape < String
+  def shellescape
+    self
+  end
+end
+
 module LanguagePack
   module ShellHelpers
+    @@user_env_hash = {}
+
+    def self.user_env_hash
+      @warnings
+    end
+
+    def user_env_hash
+      @@user_env_hash
+    end
+
+    def env(var)
+      ENV[var] || user_env_hash[var]
+    end
+
+    def self.blacklist?(key)
+      %w(PATH GEM_PATH GEM_HOME GIT_DIR).include?(key)
+    end
+
+    def self.initialize_env(path)
+      env_dir = Pathname.new("#{path}")
+      if env_dir.exist? && env_dir.directory?
+        env_dir.each_child do |file|
+          key   = file.basename.to_s
+          value = file.read.strip
+          user_env_hash[key] = value unless blacklist?(key)
+        end
+      end
+    end
+    
     # display error message and stop the build process
     # @param [String] error message
     def error(message)
